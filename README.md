@@ -7,8 +7,8 @@ Arduino script to set a ESP32 chip for temperature and humidity monitor. Data ar
 Hardware
 --------
 
-  - chip: ESP32
-  - temperature and humidity sensor: DHT22
+  - Chip: ESP32
+  - Temperature and humidity sensor: DHT22
     
 ESP32's pin 27 can be used for data acquisition. If you change it remember to modify `pinDHT22` in "Monitor.ino".
 
@@ -38,6 +38,7 @@ Flash the ESP32 chip:
   - Open the Arduino IDE
   - Go to Tools -> Board and choose "ESP32 Dev Module"
   - Set the port and bauderate
+  - Open "Monitor.ino"
   - Press Upload botton in the Arduino IDE
 
 Optionally, embed ThingSpeakMultichannel.html into your webpage:
@@ -49,6 +50,6 @@ Optionally, embed ThingSpeakMultichannel.html into your webpage:
 Test
 ----
 
-You can test if the sensor is correctly working by running "Test_simpleDHT.ino".
+You can test if the sensor is correctly working by running "test_simpleDHT.ino".
 
 If you need the MAC address of the ESP32 for Wi-Fi connection run "get_ESP32_MAC_address.ino".
