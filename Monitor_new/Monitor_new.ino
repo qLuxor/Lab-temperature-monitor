@@ -5,8 +5,10 @@
  *  below. Or just customize this script to talk to other HTTP servers.
  *
  */
-#include "esp_wpa2.h"
+
 #include <WiFi.h>
+#include <WiFiMulti.h>
+
 #include <Adafruit_Sensor.h>
 #include <DHT.h>
 #include <DHT_U.h>
@@ -18,9 +20,11 @@
 #define DHTPIN  13
 int analogInPin = A6;
 int sensorValue = 0;
+
+WiFiMulti WiFiMulti;
 DHT_Unified dht(DHTPIN, DHTTYPE);
 
-const char* ssid     = "SSID";
+const char* ssid     = "WIFI";
 const char* password = "PASSWORD";
 
 const char* host = "api.thingspeak.com";
@@ -32,17 +36,18 @@ bool wifiSetup()
     Serial.println();
     Serial.print("Connecting to ");
     Serial.println(ssid);
-
-    WiFi.begin(ssid, password);
+    delay(10);
+    
+    WiFiMulti.addAP(ssid, password);
 
     int connection_timeout = 0;
-    while (WiFi.status() != WL_CONNECTED && connection_timeout < 20) {
+    while (WiFiMulti.run() != WL_CONNECTED && connection_timeout < 40) {
         delay(500);
         ++connection_timeout;
         Serial.print(".");
     }
 
-    if (connection_timeout < 20) {
+    if (connection_timeout < 40) {
         Serial.println("");
         Serial.println("WiFi connected");
         Serial.println("IP address: ");
