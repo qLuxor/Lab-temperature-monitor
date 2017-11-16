@@ -19,7 +19,7 @@
 //      DATA: 2
 #define DHTPIN  13
 int analogInPin = A6;
-int sensorValue = 0;
+int light = 0;
 
 WiFiMulti WiFiMulti;
 DHT_Unified dht(DHTPIN, DHTTYPE);
@@ -123,10 +123,13 @@ void loop()
     Serial.print((float)temperature); Serial.print(" *C, ");
     Serial.print((float)humidity); Serial.println(" RH%");
 
-    sensorValue = analogRead(analogInPin);            
- 
+    light = analogRead(analogInPin);            
+    if (isnan(light)) {
+      Serial.println("Error reading light!");
+      return;
+    }
     Serial.print("Light = " );
-    Serial.println(sensorValue);  
+    Serial.println(light);  
     
     Serial.print("connecting to ");
     Serial.println(host);
@@ -147,6 +150,8 @@ void loop()
     url += (float)temperature;
     url += "&field2=";
     url += (float)humidity;
+    url += "&field3=";
+    url += (float)light;
 
     Serial.print("Requesting URL: ");
     Serial.println(url);
@@ -175,4 +180,3 @@ void loop()
     
     delay(60000);
 }
-
